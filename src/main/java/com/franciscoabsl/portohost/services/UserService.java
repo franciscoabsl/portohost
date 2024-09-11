@@ -22,7 +22,10 @@ public record UserService(UserRepository userRepository) {
 
     public User updateUser(Long id, User updatedUser) {
         return userRepository.findById(id)
-                .map(user -> userRepository.save(updatedUser))
+                .map(existingUser -> {
+                    updatedUser.setId(existingUser.getId());  // Set the ID of the existing user
+                    return userRepository.save(updatedUser);  // Save the updated user
+                })
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 

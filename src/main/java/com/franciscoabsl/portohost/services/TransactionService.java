@@ -22,7 +22,13 @@ public record TransactionService(TransactionRepository transactionRepository) {
 
     public Transaction updateTransaction(Long id, Transaction updatedTransaction) {
         return transactionRepository.findById(id)
-                .map(transaction -> transactionRepository.save(updatedTransaction))
+                .map(transaction -> {
+                    transaction.setBooking(updatedTransaction.getBooking());
+                    transaction.setPayer(updatedTransaction.getPayer());
+                    transaction.setReceiver(updatedTransaction.getReceiver());
+                    transaction.setAmount(updatedTransaction.getAmount());
+                    return transactionRepository.save(transaction); // Save updated transaction
+                })
                 .orElseThrow(() -> new RuntimeException("Transaction not found"));
     }
 

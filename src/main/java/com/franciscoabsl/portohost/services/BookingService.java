@@ -22,7 +22,14 @@ public record BookingService(BookingRepository bookingRepository) {
 
     public Booking updateBooking(Long id, Booking updatedBooking) {
         return bookingRepository.findById(id)
-                .map(booking -> bookingRepository.save(updatedBooking))
+                .map(booking -> {
+                    booking.setGuest(updatedBooking.getGuest());
+                    booking.setProperty(updatedBooking.getProperty());
+                    booking.setCheckIn(updatedBooking.getCheckIn());
+                    booking.setCheckOut(updatedBooking.getCheckOut());
+                    booking.setTotalValue(updatedBooking.getTotalValue());
+                    return bookingRepository.save(booking); // Save updated booking
+                })
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
     }
 

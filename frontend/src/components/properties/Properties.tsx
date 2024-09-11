@@ -1,0 +1,75 @@
+import { Link } from 'react-router-dom';
+import { useProperties } from './PropertiesContext';
+
+const Properties: React.FC = () => {
+  const { properties, loading, error } = useProperties();
+
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading properties...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  return (
+    <div className="p-6 max-w-7xl mx-auto">
+      <h2 className="text-3xl font-bold mb-6 text-gray-800">Properties</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white shadow-lg rounded-lg divide-y divide-gray-200">
+          <thead>
+            <tr className="bg-gray-200 text-gray-600">
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                ID
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                Street
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                Owner
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                City
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                State
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider">
+                Zip Code
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {properties.map((property) => (
+              <tr
+                key={property.id}
+                className="hover:bg-gray-50 transition-colors duration-300"
+              >
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  <Link to={`/properties/${property.id}`}>{property.id}</Link>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  {`${property.street}, ${property.number}`}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  {property.owner.name}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  {property.city}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  {property.state}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-800">
+                  {property.zipCode}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default Properties;

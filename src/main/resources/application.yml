@@ -5,15 +5,13 @@ spring:
   application:
     name: portohost
   datasource:
-    url: jdbc:mysql://localhost:3306/portohostdb
+    url: jdbc:mysql://db:3306/portohostdb
     username: username
     password: password
-    jpa:
-      hibernate:
-        ddl-auto: update
-        dialect: org.hibernate.dialect.MySQLDialect
-        jdbc:
-          lob.non-contextual-creation: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQL8Dialect
       properties:
         hibernate:
           show_sql: true
@@ -24,9 +22,9 @@ spring:
 
 logging:
   level:
-    com.franciscoabsl: TRACE
+    com.franciscoabsl: INFO
     root: INFO
     org:
-      hibernate: INFO
+      hibernate: DEBUG
       springframework:
         web: DEBUG

@@ -22,7 +22,26 @@ public record PropertyService(PropertyRepository propertyRepository) {
 
     public Property updateProperty(Long id, Property updatedProperty) {
         return propertyRepository.findById(id)
-                .map(property -> propertyRepository.save(updatedProperty))
+                .map(property -> {
+                    property.setStreet(updatedProperty.getStreet());
+                    property.setNumber(updatedProperty.getNumber());
+                    property.setComplement(updatedProperty.getComplement());
+                    property.setNeighborhood(updatedProperty.getNeighborhood());
+                    property.setCity(updatedProperty.getCity());
+                    property.setState(updatedProperty.getState());
+                    property.setZipCode(updatedProperty.getZipCode());
+                    property.setOwner(updatedProperty.getOwner());
+                    property.setNumberOfRooms(updatedProperty.getNumberOfRooms());
+                    property.setArea(updatedProperty.getArea());
+                    property.setNumberOfBathrooms(updatedProperty.getNumberOfBathrooms());
+                    property.setFullKitchen(updatedProperty.isFullKitchen());
+                    property.setDescription(updatedProperty.getDescription());
+                    property.setMaxGuests(updatedProperty.getMaxGuests());
+                    property.setLongitude(updatedProperty.getLongitude());
+                    property.setLatitude(updatedProperty.getLatitude());
+                    property.setMinimumStay(updatedProperty.getMinimumStay());
+                    return propertyRepository.save(property);
+                })
                 .orElseThrow(() -> new RuntimeException("Property not found"));
     }
 

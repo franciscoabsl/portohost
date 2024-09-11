@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .property-section {
+    @apply bg-white p-6 rounded-lg shadow-lg;
+  }
+
+  .property-section h2 {
+    @apply text-xl font-semibold mb-4;
+  }
+
+  .property-section div {
+    @apply space-y-4;
+  }
+
+  .property-section div strong {
+    @apply font-medium;
+  }
+}
