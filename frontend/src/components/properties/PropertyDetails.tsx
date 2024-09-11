@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { Property } from './PropertiesContext';
 import {
   FaBed,
   FaAddressCard,
@@ -17,42 +18,6 @@ import {
   FaArrowsUpDownLeftRight,
 } from 'react-icons/fa6';
 import EditPropertyModal from './EditPropertyModal';
-
-interface Owner {
-  name: string;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  birthDate: string;
-  cpf: string;
-  phone: string;
-  email: string;
-}
-
-export interface Property {
-  id: number;
-  street: string;
-  number: string;
-  complement: string;
-  neighborhood: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  owner: Owner;
-  numberOfRooms: number;
-  area: number;
-  numberOfBathrooms: number;
-  fullKitchen: boolean;
-  description: string;
-  maxGuests: number;
-  longitude: number;
-  latitude: number;
-  minimumStay: number;
-}
 
 const PropertyDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -140,7 +105,7 @@ const PropertyDetails: React.FC = () => {
                 </div>
                 <div className="flex items-center">
                   <FaAlignJustify className="mr-2" />
-                  <strong className="mr-1">Description:</strong>{' '}
+                  <strong className="mr-1">Description:</strong>
                   {property.description}
                 </div>
                 <div className="flex items-center">
@@ -166,10 +131,10 @@ const PropertyDetails: React.FC = () => {
                 </div>
                 <div className="flex items-center">
                   <FaLocationDot className="mr-2" />
-                  <strong className="mr-1">Address:</strong>{' '}
+                  <strong className="mr-1">Address:</strong>
                   {property.owner.street}, {property.owner.number},{' '}
                   {property.owner.complement}, {property.owner.neighborhood},{' '}
-                  {property.owner.city},{' '}
+                  {property.owner.city}
                 </div>
                 <div className="flex items-center">
                   <FaPhone className="mr-2" />

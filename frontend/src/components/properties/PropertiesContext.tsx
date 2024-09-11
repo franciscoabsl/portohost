@@ -2,11 +2,21 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 interface Owner {
-  id: number;
   name: string;
+  street: string;
+  number: string;
+  complement: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  birthDate: string;
+  cpf: string;
+  phone: string;
+  email: string;
 }
 
-interface Property {
+export interface Property {
   id: number;
   street: string;
   number: string;
@@ -22,6 +32,9 @@ interface Property {
   fullKitchen: boolean;
   description: string;
   maxGuests: number;
+  longitude: number;
+  latitude: number;
+  minimumStay: number;
 }
 
 interface PropertiesContextType {
