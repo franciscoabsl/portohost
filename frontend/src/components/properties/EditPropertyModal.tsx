@@ -1,13 +1,34 @@
-// src/components/EditPropertyModal.tsx
 import React, { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Property } from './PropertyDetails';
 import { FaTimes } from 'react-icons/fa';
+
+interface Owner {
+  id: number;
+  name: string;
+}
+
+interface Property {
+  id: number;
+  street: string;
+  number: string;
+  numberOfRooms: number;
+  fullKitchen: boolean;
+  numberOfBathrooms: number;
+  area: number;
+  zipCode: string;
+  description: string;
+  maxGuests: number;
+  minimumStay: number;
+  latitude: number;
+  longitude: number;
+  owner: number;
+}
 
 interface EditPropertyModalProps {
   isOpen: boolean;
   onClose: () => void;
   property: Property | null;
+  owners: Owner[];
   onSave: (updatedProperty: Property) => void;
 }
 
@@ -15,12 +36,17 @@ const EditPropertyModal: React.FC<EditPropertyModalProps> = ({
   isOpen,
   onClose,
   property,
+  owners,
   onSave,
 }) => {
   const [formData, setFormData] = useState<Property | null>(property);
+  const [selectedOwner, setSelectedOwner] = useState<number | null>(
+    property?.owner || null
+  );
 
   useEffect(() => {
     setFormData(property); // Atualiza o formulário quando o modal for reaberto
+    setSelectedOwner(property?.owner || null);
   }, [property]);
 
   const handleInputChange = (
@@ -33,6 +59,12 @@ const EditPropertyModal: React.FC<EditPropertyModalProps> = ({
   const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => (prev ? { ...prev, [name]: value === 'yes' } : null));
+  };
+
+  const handleOwnerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newOwnerId = Number(e.target.value);
+    setSelectedOwner(newOwnerId);
+    setFormData((prev) => (prev ? { ...prev, owner: newOwnerId } : null));
   };
 
   const handleSave = () => {
@@ -209,6 +241,51 @@ const EditPropertyModal: React.FC<EditPropertyModalProps> = ({
                     onChange={handleInputChange}
                     className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Latitude
+                  </label>
+                  <input
+                    type="number"
+                    name="latitude"
+                    value={formData.latitude}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Longitude
+                  </label>
+                  <input
+                    type="number"
+                    name="longitude"
+                    value={formData.longitude}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Owner
+                  </label>
+                  <select
+                    name="owner"
+                    value={selectedOwner || ''}
+                    onChange={handleOwnerChange}
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                  >
+                    <option value="">Select an owner</option>
+                    {owners.map((owner) => (
+                      <option key={owner.id} value={owner.id}>
+                        {owner.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

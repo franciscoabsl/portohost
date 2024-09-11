@@ -1,4 +1,3 @@
-// components/properties/PropertiesContext.tsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -29,6 +28,7 @@ interface PropertiesContextType {
   properties: Property[];
   loading: boolean;
   error: string | null;
+  fetchProperties: () => void;
 }
 
 const PropertiesContext = createContext<PropertiesContextType | undefined>(
@@ -41,6 +41,18 @@ export const PropertiesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const fetchProperties = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/v1/properties');
+      setProperties(response.data);
+    } catch (err) {
+      setError('Failed to fetch properties');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     axios
@@ -57,7 +69,9 @@ export const PropertiesProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <PropertiesContext.Provider value={{ properties, loading, error }}>
+    <PropertiesContext.Provider
+      value={{ properties, loading, error, fetchProperties }}
+    >
       {children}
     </PropertiesContext.Provider>
   );

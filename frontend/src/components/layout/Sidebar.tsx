@@ -4,7 +4,7 @@ const Sidebar = () => {
   return (
     <div className="fixed top-0 left-0 w-64 h-screen bg-gray-800 text-white overflow-y-auto">
       <h2 className="text-2xl font-bold text-center py-4 border-b border-gray-700">
-        Admin Dashboard
+        Porto Hosts
       </h2>
       <ul className="mt-6 space-y-2">
         <li className="hover:bg-gray-700 transition-all">
@@ -14,22 +14,22 @@ const Sidebar = () => {
         </li>
         <li className="hover:bg-gray-700 transition-all">
           <Link to="/users" className="block py-3 px-6">
-            Usuários
+            Users
           </Link>
         </li>
         <li className="hover:bg-gray-700 transition-all">
           <Link to="/properties" className="block py-3 px-6">
-            Propriedades
+            Properties
           </Link>
         </li>
         <li className="hover:bg-gray-700 transition-all">
           <Link to="/bookings" className="block py-3 px-6">
-            Reservas
+            Bookings
           </Link>
         </li>
         <li className="hover:bg-gray-700 transition-all">
           <Link to="/transactions" className="block py-3 px-6">
-            Transações
+            Transactions
           </Link>
         </li>
       </ul>

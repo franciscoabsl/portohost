@@ -1,8 +1,25 @@
 import { Link } from 'react-router-dom';
 import { useProperties } from './PropertiesContext';
+import React, { useState } from 'react';
+import CreatePropertyModal from './CreatePropertyModal';
 
 const Properties: React.FC = () => {
-  const { properties, loading, error } = useProperties();
+  const { properties, loading, error, fetchProperties } = useProperties();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSave = () => {
+    // Após salvar uma nova propriedade, você pode recarregar as propriedades
+    fetchProperties();
+    closeModal();
+  };
 
   if (loading) {
     return <p className="text-center text-gray-500">Loading properties...</p>;
@@ -15,6 +32,17 @@ const Properties: React.FC = () => {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Properties</h2>
+
+      {/* Botão para abrir o modal de criação de propriedade */}
+      <div className="flex justify-end mb-6">
+        <button
+          onClick={openModal}
+          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+        >
+          Create Property
+        </button>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-lg rounded-lg divide-y divide-gray-200">
           <thead>
@@ -68,6 +96,13 @@ const Properties: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal de criação de propriedade */}
+      <CreatePropertyModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSave={handleSave}
+      />
     </div>
   );
 };
