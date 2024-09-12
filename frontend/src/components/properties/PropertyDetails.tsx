@@ -14,8 +14,9 @@ import {
   FaAlignJustify,
   FaPersonCirclePlus,
   FaCalendarDay,
-  FaRegFaceGrin,
   FaArrowsUpDownLeftRight,
+  FaPen,
+  FaCircleUser,
 } from 'react-icons/fa6';
 import EditPropertyModal from './EditPropertyModal';
 
@@ -71,9 +72,9 @@ const PropertyDetails: React.FC = () => {
     <div className="p-6 max-w-7xl mx-auto">
       <button
         onClick={handleEditClick}
-        className="absolute top-4 right-4 text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg"
+        className="top-4 right-4 fixed text-white bg-blue-500 hover:bg-blue-600 px-2 py-2 rounded-full"
       >
-        Edit Property
+        <FaPen />
       </button>
       {property && (
         <>
@@ -126,7 +127,7 @@ const PropertyDetails: React.FC = () => {
               <h2 className="text-xl font-semibold mb-4">Owner Information</h2>
               <div className="space-y-4">
                 <div className="flex items-center">
-                  <FaRegFaceGrin className="mr-2" />
+                  <FaCircleUser className="mr-2" />
                   <strong className="mr-1">Name:</strong> {property.owner.name}
                 </div>
                 <div className="flex items-center">
